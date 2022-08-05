@@ -17,8 +17,6 @@ Then I should see my journey is not planned in the Journey results page
 
 Scenario: 3 Verify that the widget is unable to plan a journey if no locations are entered into the widget
 Given I have navigated to TfL website
-And I plan my journey from 
-And to 
 When I plan my journey
 Then I should see location validation errors on the form
 
