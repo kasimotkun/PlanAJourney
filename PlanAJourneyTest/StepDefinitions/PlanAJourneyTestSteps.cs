@@ -17,8 +17,7 @@ namespace PlanAJourney.PlanAJourneyTest.StepDefinitions
 [Binding]
 public class PlanAJourneyTestFeatureSteps : IDisposable
 {
-private String searchKeyword;
- 
+
 private ChromeDriver chromeDriver;
 private string fromLocation ="";
 private string toLocation = "";
@@ -33,7 +32,6 @@ Assert.IsTrue(chromeDriver.Title.Contains("Transport for London"));
 chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
 // Accept Cookies
-chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3); 
 
 chromeDriver.FindElement(By.Id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll")).Click() ;
 
@@ -42,7 +40,6 @@ String javascript = "endCookieProcess(); return false;";
 IWebDriver  driver = (IWebDriver )  chromeDriver; 
 IJavaScriptExecutor  jsExecutor = (IJavaScriptExecutor ) driver;        
 jsExecutor.ExecuteScript(javascript);  
-
 
 
 
@@ -75,6 +72,8 @@ chromeDriver.FindElement(By.Id("InputFrom")).SendKeys(fromLocation);
 [Given(@"to (.*)")]
 public void GivenTo(string toLocation)
 {
+
+
 this.toLocation = toLocation;
 chromeDriver.FindElement(By.Id("InputTo")).SendKeys(toLocation);
 }
@@ -165,6 +164,8 @@ Assert.IsTrue(chromeDriver.FindElement(By.CssSelector("#full-width-content > div
 [Then(@"I should see location validation errors on the form")]
 public void ThenIShouldSeeLocationValidationErrorsOnTheForm()
 {
+var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(30));
+wait.Until(ExpectedConditions.ElementIsVisible(By.Id("InputFrom-error")));
 // Assert the location validation errors
 Assert.IsTrue(chromeDriver.FindElement(By.Id("InputFrom-error")).Text.Contains("The From field is required."));
 Assert.IsTrue(chromeDriver.FindElement(By.Id("InputTo-error")).Text.Contains("The To field is required."));
